@@ -39,5 +39,7 @@
           image: "gcr.io/{{ gcp.project }}/{{ container.image }}:{{ tag }}"
           ports: "{{ container.ports }}"
           state: started
+        tags:
+          - start
       become: True
       become_user: root
