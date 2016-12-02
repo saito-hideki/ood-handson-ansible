@@ -1,0 +1,43 @@
+---
+- hosts: "{{ hostname }}"
+
+  vars:
+    gcp:
+      project: ood2016-handson
+    packages:
+      apt:
+        - python-pip
+      pip:
+        - docker-py
+    container:
+      image: docker-sample
+      name: webserver
+      tags:
+        - v1.0
+        - v1.1
+      ports:
+        - "80:80"
+
+  tasks:
+    - block:
+      - name: install requirement packages by apt
+        apt:
+          name: "{{ item }}"
+          state: latest
+        with_items: "{{ packages.apt }}"
+      - name: install requirement packages by pip
+        pip:
+          name: "{{ packages.pip }}"
+          state: latest
+        with_items: "{{ packages.pip }}"
+      - name: pull container image from gcr.io by gcloud command
+        command: "gcloud docker -- pull gcr.io/{{ gcp.project }}/{{ container.image }}:{{ item }}"
+        with_items: "{{ container.tags }}"
+      - name: launch container
+        docker_container:
+          name: "{{ container.name }}"
+          image: "gcr.io/{{ gcp.project }}/{{ container.image }}:{{ tag }}"
+          ports: "{{ container.ports }}"
+          state: started
+      become: True
+      become_user: root
