@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+
+  tasks:
+    - name: delete instance from GCE
+      command: docker-machine rm -y "{{ hostname }}"

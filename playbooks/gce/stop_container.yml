@@ -1,0 +1,18 @@
+---
+- hosts: "{{ hostname }}"
+
+  vars:
+    gcp:
+      project: ood2016-handson
+    container:
+      image: docker-sample
+      name: webserver
+
+
+  tasks:
+    - name: stop container
+      docker_container:
+        name: "{{ container.name }}"
+        state: stopped
+      become: True
+      become_user: root
