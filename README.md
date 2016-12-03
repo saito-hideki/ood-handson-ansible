@@ -9,7 +9,11 @@ This repository is used by hands-on session at Okinawa Open Days.
 
 ### create_instance.yml
 
-Create virtual machine instance with Google COmpute Engine.
+Create virtual machine instance with Google Compute Engine.
+
+#### Requirements
+
+- docker-macine
 
 #### Arguments
 
@@ -21,6 +25,26 @@ Create virtual machine instance with Google COmpute Engine.
 
 ```
 $ ansible-playbook -i hosts -e "hostname=testserver" playbooks/gce/create_instance.yml 
+```
+
+### delete_instance.yml
+
+Delete virtual machine instane from Google Compute Engine.
+
+#### Requirements
+
+- docker-machine
+
+#### Arguments
+
+- hostname: set system's host name to delete
+
+#### Examples
+
+1) delete testserver from Google Compute Engine
+
+```
+$ ansible-playbook -i hosts -e "hostname=testserver" playbooks/gce/delete_instance.yml 
 ```
 
 ### launch_container.yml
