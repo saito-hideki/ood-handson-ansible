@@ -1,0 +1,21 @@
+---
+- hosts: "{{ hostname }}"
+
+  vars_files:
+    - vars_handson.yml
+
+  tasks:
+    - block:
+      - name: stop container
+        docker_container:
+          name: "{{ container.name }}"
+          state: stopped
+      - name: launch container
+        docker_container:
+          name: "{{ container.name }}"
+          image: "gcr.io/{{ gcp.project }}/{{ container.image }}:{{ tag }}"
+          ports: "{{ container.ports }}"
+          state: started
+      become: True
+      become_user: root
+

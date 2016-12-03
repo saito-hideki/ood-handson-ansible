@@ -1,0 +1,11 @@
+---
+gcp:
+  project: ood2016-handson
+container:
+  image: docker-sample
+  name: webserver
+  tags:
+    - v1.0
+    - v1.1
+  ports:
+    - "80:80"
